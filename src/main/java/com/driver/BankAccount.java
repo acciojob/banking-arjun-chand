@@ -13,23 +13,25 @@ public class BankAccount {
     }
 
     public String generateAccountNumber(int digits, int sum) throws Exception{
-        if (digits <= 0) {
+        if(sum > 9*digits){
             throw new Exception("Account Number can not be generated");
         }
 
-        StringBuilder accountNumber = new StringBuilder();
+        int quotient = sum/9;
+        int remainder = sum%9;
 
-        for (int i = 0; i < digits; i++) {
-            int digit = i == digits - 1 ? sum : (int) (Math.random() * 10);
-            accountNumber.append(digit);
-            sum -= digit;
+        StringBuilder accNo = new StringBuilder();
+        while(quotient-->0){
+            accNo.append("9");
         }
-
-        if (sum == 0) {
-            return accountNumber.toString();
-        } else {
-            throw new Exception("Account Number can not be generated");
-        }
+       if (remainder > 0){
+           accNo.append(remainder);
+       }
+       int remainingdigits = digits - accNo.length();
+       while(remainingdigits-->0){
+           accNo.append("0");
+       }
+       return accNo.toString();
     }
 
     public void deposit(double amount) {
